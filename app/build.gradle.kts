@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
-    id("kotlin-kapt") // enable kapt for dataBinding
+    id("kotlin-kapt") // enable kapt for dataBinding and for hilt
+    id("com.google.dagger.hilt.android") //hilt
 }
 
 android {
@@ -82,6 +83,10 @@ dependencies {
 //    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3") // Assumed latest stable version
 
+
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
 
 }
