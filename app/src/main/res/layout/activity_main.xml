@@ -3,40 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context="MainActivity">
 
-    <EditText
-        android:id="@+id/editTextData"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Enter text to save" />
 
-    <Button
-        android:id="@+id/buttonSave"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Data" />
-
-    <Button
-        android:id="@+id/buttonLoad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Load Data" />
-
-    <Button
-        android:id="@+id/buttonDelete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Data" />
-
-    <TextView
-        android:id="@+id/textViewSavedData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No data found"
-        android:textSize="16sp"
-        android:padding="8dp" />
-
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
 </LinearLayout>
