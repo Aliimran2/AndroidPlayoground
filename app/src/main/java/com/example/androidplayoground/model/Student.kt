@@ -1,3 +1,10 @@
 package com.example.androidplayoground.model
 
-data class Student(val id : Int, var studentName : String)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "students")
+data class Student(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String,
+)

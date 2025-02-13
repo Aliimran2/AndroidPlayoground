@@ -9,7 +9,7 @@ import com.example.androidplayoground.databinding.ItemRowBinding
 import com.example.androidplayoground.model.Student
 
 
-class MyAdapter : ListAdapter<Student,MyAdapter.MyVH >(MyDiffUtil) {
+class StudentAdapter(val onClick :(Student)->Unit) : ListAdapter<Student,StudentAdapter.MyVH >(MyDiffUtil) {
 
     companion object {
         val MyDiffUtil = object : DiffUtil.ItemCallback<Student>(){
@@ -18,9 +18,13 @@ class MyAdapter : ListAdapter<Student,MyAdapter.MyVH >(MyDiffUtil) {
         }
     }
 
-    class MyVH(private val binding: ItemRowBinding):RecyclerView.ViewHolder(binding.root){
+    inner class MyVH(private val binding: ItemRowBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:Student){
-            binding.tvName.text = item.studentName
+            binding.tvName.text = item.name
+            binding.root.setOnLongClickListener{
+                onClick(item)
+                true
+            }
         }
     }
 

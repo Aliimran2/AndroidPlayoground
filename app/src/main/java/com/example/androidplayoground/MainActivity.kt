@@ -1,13 +1,13 @@
 package com.example.androidplayoground
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.androidplayoground.adapters.MyAdapter
+import com.example.androidplayoground.adapters.StudentAdapter
 import com.example.androidplayoground.databinding.ActivityMainBinding
 import com.example.androidplayoground.model.Student
-import com.example.androidplayoground.viewmodels.MyViewModel
+import com.example.androidplayoground.viewmodels.StudentViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,50 +15,56 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: MyViewModel by viewModels()
+    private val viewModel: StudentViewModel by viewModels()
+    private lateinit var adapter : StudentAdapter
 
-    private lateinit var adapter: MyAdapter
-
+    var id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
-
-
-        initRecyclerView()
-        setupSearchBar()
-        observeViewModel()
-
-
-    }
-
-
-    private fun setupSearchBar() {
-        binding.searchBar.setOnClickListener {
-            binding.searchView.show()
+        adapter = StudentAdapter { student ->
+            viewModel.deleteStudent(student)
         }
-        binding.searchView.editText.setOnEditorActionListener { v, actionId, event ->
-            val query = v.text.toString()
-            viewModel.searchStudents(query)
 
-
-            binding.searchView.hide()
-            true
-
-        }
-    }
-
-    private fun observeViewModel() {
-        viewModel.filteredStudents.observe(this) {students->
-            Log.d("MainActivity", "Students list: $students") // ✅ Debugging log
-            adapter.submitList(students)
-        }
-    }
-
-    private fun initRecyclerView() {
-        adapter = MyAdapter()
         binding.mRv.adapter = adapter
+        viewModel.allStudents.observe(this) {
+            adapter.submitList(it)
+        }
+
+        binding.fab.setOnClickListener {
+            id++
+            viewModel.insertStudent(Student(id, "Student ${id}"))
+
+        }
+
+        setupSearchView()
+
+
     }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    viewModel.searchStudents(it)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.searchStudents(it)
+                }
+                return true
+            }
+        })
+
+        viewModel.searchResults.observe(this){
+            adapter.submitList(it)
+        }
+    }
+
+
 }
