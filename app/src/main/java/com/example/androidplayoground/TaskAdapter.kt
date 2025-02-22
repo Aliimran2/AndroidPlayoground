@@ -2,6 +2,7 @@ package com.example.androidplayoground
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -32,9 +33,9 @@ class TaskAdapter(
                 taskDescriptionTextView.text = task.description
                 taskStatusTextView.text =
                     if (task.isCompleted) "Status : Completed" else "Status : Incomplete"
-                taskDescriptionTextView.setTextColor(
-                    if (task.isCompleted) binding.root.context.getColor(android.R.color.holo_green_dark)
-                    else binding.root.context.getColor(android.R.color.holo_red_dark)
+                taskStatusTextView.setTextColor(
+                    if (task.isCompleted) ContextCompat.getColor(binding.root.context, android.R.color.holo_green_dark)
+                    else ContextCompat.getColor(binding.root.context, android.R.color.holo_red_dark)
                 )
 
                 binding.updateButton.setOnClickListener { onUpdateClick(task) }
