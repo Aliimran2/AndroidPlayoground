@@ -1,4 +1,4 @@
-package com.example.androidplayoground
+package com.example.androidplayoground.tasks
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

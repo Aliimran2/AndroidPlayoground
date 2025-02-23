@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidplayoground.databinding.ItemTaskBinding
+import com.example.androidplayoground.tasks.Task
 
 class TaskAdapter(
     private val onUpdateClick: (Task) -> Unit,

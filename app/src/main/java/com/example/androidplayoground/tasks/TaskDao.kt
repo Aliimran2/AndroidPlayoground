@@ -1,4 +1,4 @@
-package com.example.androidplayoground
+package com.example.androidplayoground.tasks
 
 import androidx.room.Dao
 import androidx.room.Delete
