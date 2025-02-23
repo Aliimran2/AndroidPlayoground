@@ -6,27 +6,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import com.example.androidplayoground.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private lateinit var viewModelFactory: TaskViewModelFactory
     private lateinit var adapter: TaskAdapter
-    private val viewModel: TaskViewModel by viewModels { viewModelFactory }
+    private val viewModel: TaskViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val taskDao = AppDatabase.getDatabase(this).taskDao()
-        val repository = TaskRepository(taskDao)
-        viewModelFactory = TaskViewModelFactory(repository)
+
 
         adapter = TaskAdapter(
             onUpdateClick = { task -> viewModel.updateTask(task) },

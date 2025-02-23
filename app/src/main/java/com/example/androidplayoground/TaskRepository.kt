@@ -1,8 +1,11 @@
 package com.example.androidplayoground
 
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TaskRepository(private val taskDao: TaskDao) {
+@Singleton
+class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
 
     fun searchTask(query : String) : Flow<List<Task>> {
