@@ -3,22 +3,38 @@ package com.example.androidplayoground
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
-    private val _tasks = MutableStateFlow<List<Task>>(emptyList())
-    val tasks = _tasks.asStateFlow()
+    private val _searchQuery = MutableStateFlow("")
 
-    init {
-        viewModelScope.launch {
-            repository.getAllTasks().collect {taskList ->
-                _tasks.value = taskList
-            }
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+    val searchResults = _searchQuery
+        .debounce(300)
+        .distinctUntilChanged()
+        .flatMapLatest {query ->
+            repository.searchTask(query)
         }
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    fun updateSearch(query :String){
+        _searchQuery.value = query
     }
+
+
+
+
 
 
     fun insertTask(title: String, description: String) {

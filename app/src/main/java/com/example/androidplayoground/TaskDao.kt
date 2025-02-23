@@ -24,6 +24,6 @@ interface TaskDao {
     @Query("SELECT * FROM tasks ORDER BY timestamp DESC")
     fun getAllTask() : Flow<List<Task>>
 
-    @Query("SELECT * FROM tasks WHERE isCompleted = :completed ORDER BY timestamp")
-    fun searchTask(completed : Boolean) : Flow<List<Task>>
+    @Query("SELECT * FROM tasks WHERE title LIKE '%' || :query || '%' ORDER BY timestamp")
+    fun searchTask(query: String) : Flow<List<Task>>
 }

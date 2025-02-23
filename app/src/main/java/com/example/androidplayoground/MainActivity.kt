@@ -3,6 +3,7 @@ package com.example.androidplayoground
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import com.example.androidplayoground.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -35,8 +36,8 @@ class MainActivity : AppCompatActivity() {
         binding.taskRecyclerView.adapter = adapter
 
         lifecycleScope.launch {
-            viewModel.tasks.collectLatest { taskList ->
-                adapter.submitList(taskList)
+            viewModel.searchResults.collectLatest { tasksList ->
+                adapter.submitList(tasksList)
             }
         }
 
@@ -53,6 +54,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.updateSearch(newText?:"")
+                return true
+            }
+        })
 
 
     }
