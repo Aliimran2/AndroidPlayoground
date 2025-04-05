@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+
 }
 
 android {
@@ -52,11 +52,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation ("androidx.fragment:fragment-ktx:1.8.6") //
+
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
 
 
-
-    implementation("com.google.dagger:dagger:2.x")
-    kapt("com.google.dagger:dagger-compiler:2.x")
 
 
 }

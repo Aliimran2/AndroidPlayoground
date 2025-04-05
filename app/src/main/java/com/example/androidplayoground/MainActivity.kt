@@ -11,9 +11,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val fragment = SampleFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .commit()
+
 
 
     }
